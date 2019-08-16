@@ -32,9 +32,8 @@ public class DukeConsole {
 
     public void dukeMessage(ArrayList<String> messages) {
         System.out.println(MESSAGE_BARRIER);
-        Iterator<String> message = messages.iterator();
-        while (message.hasNext()) {
-            System.out.println(MESSAGE_SPACING + message.next());
+        for (String message : messages) {
+            System.out.println(MESSAGE_SPACING + message);
         }
         System.out.println(MESSAGE_BARRIER);
     }
