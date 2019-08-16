@@ -1,6 +1,10 @@
 package main.java;
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 
 public class DukeConsole {
     private final String MESSAGE_BARRIER = "    ____________________________________________________________";
@@ -10,6 +14,12 @@ public class DukeConsole {
                               + "| | | | | | | |/ / _ \\\n"
                               + "| |_| | |_| |   <  __/\n"
                               + "|____/ \\__,_|_|\\_\\___|\n";
+
+    private BufferedReader bufferedreader;
+
+    public DukeConsole() {
+        bufferedreader = new BufferedReader(new InputStreamReader(System.in));
+    }
 
     /*
     Message printing methods
@@ -40,6 +50,16 @@ public class DukeConsole {
     /*
     System input methods
     */
+    public String readUserInputLine() {
+        String input_line = null;
+        try {
+            input_line = bufferedreader.readLine();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return input_line;
+    }
 
     public void welcomeMessage() {
         System.out.println(LOGO);
