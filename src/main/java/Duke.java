@@ -1,9 +1,9 @@
 package main.java;
-import main.java.Console;
+import main.java.DukeConsole;
 
 public class Duke {
     public static void main(String[] args) {
-        Console console = new Console();
+        DukeConsole console = new DukeConsole();
         console.welcomeMessage();
     }
 }
