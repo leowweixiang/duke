@@ -5,19 +5,42 @@ import java.util.ArrayList;
 public class DukeLogic {
 
     private DukeConsole console;
-    private ArrayList<String> tasklist;
+    private ArrayList<Task> tasklist;
 
     public DukeLogic() {
         console = new DukeConsole();
-        tasklist = new ArrayList<String>();
+        tasklist = new ArrayList<Task>();
     }
 
     public void addTask(String task_string) {
-        tasklist.add(task_string);
+        Task new_task = new Task(task_string);
+        tasklist.add(new_task);
+    }
+
+    public void markTaskAsDone(String index_string) {
+        int index = -1;
+        try {
+            index = Integer.parseInt(index_string) - 1;
+            if (index < 0 || index > tasklist.size()) {
+                console.dukeMessage("Error! Please provide a proper index");
+            }
+            else {
+                Task task = tasklist.get(index);
+                task.setDone(true);
+                console.dukeMessage("Nice! I've marked this task as done:", task.toString());
+            }
+        }
+        catch (NumberFormatException | NullPointerException nfe) {
+            console.dukeMessage("Error! Please provide a proper index");
+        }
     }
 
     public void listTasks() {
-        console.dukeMessage(tasklist);          //w00t
+        ArrayList<String> task_tostrings = new ArrayList<String>();
+        for (Task task: tasklist) {
+            task_tostrings.add(task.toString());
+        }
+        console.dukeMessage(task_tostrings);          //w00t
     }
 
     public boolean processInput(String input_string) {
@@ -37,6 +60,14 @@ public class DukeLogic {
             case "list":
                 listTasks();
                 break;
+            case "done":
+                if (split_input.length <= 1) {
+                    console.dukeMessage("Error! Task to be marked not specified");
+                }
+                else {
+                    markTaskAsDone(split_input[1]);
+                }
+                break;
             default:
                 addTask(input_string);
                 console.dukeMessage("added: " + input_string);
@@ -45,7 +76,7 @@ public class DukeLogic {
         return result;
     }
 
-    public boolean runLogic() {
+    public void runLogic() {
         boolean res = true;
         console = new DukeConsole();
         console.welcomeMessage();
@@ -54,6 +85,5 @@ public class DukeLogic {
             String user_input = console.readUserInputLine();
             res = processInput(user_input);
         }
-        return res;
     }
 }
